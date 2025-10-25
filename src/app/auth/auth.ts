@@ -22,14 +22,14 @@ export class Auth {
   });
 
   get usernameIsInvalid() {
-    return this.form.controls.username.touched && 
-      this.form.controls.username.dirty && 
+    return this.form.controls.username.touched &&
+      this.form.controls.username.dirty &&
       this.form.controls.username.invalid
   }
 
   get passwordIsInvalid() {
-    return this.form.controls.password.touched && 
-      this.form.controls.password.dirty && 
+    return this.form.controls.password.touched &&
+      this.form.controls.password.dirty &&
       this.form.controls.password.invalid
   }
 
