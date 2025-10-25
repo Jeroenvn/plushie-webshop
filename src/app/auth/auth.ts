@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
-import { LoadingSpinner } from "../shared/loading-spinner/loading-spinner";
+import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-auth',
@@ -61,10 +61,9 @@ export class Auth {
           console.log(resData);
           this.isLoading = false;
         },
-        error: (error: Error) => {
-          console.log(error);
+        error: (errorMessage) => {
           this.isLoading = false;
-          this.error = error.message
+          this.error = errorMessage;
         },
       });
     } else {
@@ -73,9 +72,9 @@ export class Auth {
           console.log(resData);
           this.isLoading = false;
         },
-        error: (error: Error) => {
-          console.log(error);
+        error: (errorMessage) => {
           this.isLoading = false;
+          this.error = errorMessage;
         },
       });
     }
