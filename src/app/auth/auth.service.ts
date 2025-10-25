@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
@@ -14,16 +14,7 @@ export class AuthService {
         username: username,
         password: password,
       })
-      .pipe(
-        catchError((errorResponse) => {
-          let errorMessage = 'An unknown error occured!';
-          if (!errorResponse.error) {
-            return throwError(errorMessage);
-          }
-          errorMessage = errorResponse.error.message;
-          return throwError(errorMessage);
-        })
-      );
+      .pipe(catchError(this.handleError));
   }
 
   login(username: String, password: String) {
@@ -32,15 +23,15 @@ export class AuthService {
         username: username,
         password: password,
       })
-      .pipe(
-        catchError((errorResponse) => {
-          let errorMessage = 'An unknown error occured!';
-          if (!errorResponse.error) {
-            return throwError(errorMessage);
-          }
-          errorMessage = errorResponse.error.message;
-          return throwError(errorMessage);
-        })
-      );
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occured!';
+    if (!errorResponse.error) {
+      return throwError(errorMessage);
+    }
+    errorMessage = errorResponse.error.message;
+    return throwError(errorMessage);
   }
 }
