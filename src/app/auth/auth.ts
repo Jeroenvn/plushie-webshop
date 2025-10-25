@@ -43,11 +43,20 @@ export class Auth {
   }
 
   onSubmit() {
+    if (!this.form.valid) {
+      return;
+    }
     const enteredUsername = this.form.value.username!;
     const enteredPassword = this.form.value.password!;
-    this.authService.registerUser(enteredUsername, enteredPassword).subscribe({
-      next: (resData) => console.log(resData),
-    });
+    if (this.isLoginMode) {
+      // ...
+    } else {
+      this.authService.signUp(enteredUsername, enteredPassword).subscribe({
+        next: (resData) => console.log(resData),
+        error: (error: Error) => console.log(error),
+      });
+    }
+
     this.form.reset();
   }
 }
