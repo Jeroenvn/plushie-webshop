@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -10,7 +10,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class Auth {
 
-  private httpClient = inject(HttpClient);
+  private authService = inject(AuthService);
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -40,15 +40,11 @@ export class Auth {
   }
 
   onSubmit() {
-    const enteredUsername = this.form.value.username;
-    const enteredPassword = this.form.value.password;
-    console.log(enteredUsername);
-    this.httpClient.post('http://localhost:8081/auth/newUser', {
-      username: enteredUsername,
-      password: enteredPassword
-    }).subscribe({
-      next: (resData) => console.log(resData)
-    })
+    const enteredUsername = this.form.value.username!;
+    const enteredPassword = this.form.value.password!;
+    this.authService.registerUser(enteredUsername, enteredPassword).subscribe({
+      next: (resData) => console.log(resData),
+    });
     this.form.reset();
   }
 }
