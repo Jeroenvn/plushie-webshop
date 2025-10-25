@@ -2,6 +2,11 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
 
+export interface AuthResponseData {
+  token: string;
+  expiresIn: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,7 +15,7 @@ export class AuthService {
 
   signUp(username: String, password: String) {
     return this.httpClient
-      .post('http://localhost:8081/auth/newUser', {
+      .post<AuthResponseData>('http://localhost:8081/auth/newUser', {
         username: username,
         password: password,
       })
@@ -19,7 +24,7 @@ export class AuthService {
 
   login(username: String, password: String) {
     return this.httpClient
-      .post('http://localhost:8081/auth/generateToken', {
+      .post<AuthResponseData>('http://localhost:8081/auth/generateToken', {
         username: username,
         password: password,
       })

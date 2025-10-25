@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
+import { AuthResponseData, AuthService } from './auth.service';
 import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -11,6 +12,10 @@ import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
 })
 export class Auth {
   private authService = inject(AuthService);
+
+  isLoginMode: boolean = true;
+  isLoading: boolean = false;
+  error: string = '';
 
   form = new FormGroup({
     username: new FormControl('', {
@@ -37,10 +42,6 @@ export class Auth {
     );
   }
 
-  isLoginMode: boolean = true;
-  isLoading: boolean = false;
-  error: string = '';
-
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
@@ -53,31 +54,26 @@ export class Auth {
     const enteredUsername = this.form.value.username!;
     const enteredPassword = this.form.value.password!;
 
+    let authObservable: Observable<AuthResponseData>;
+
     this.isLoading = true;
 
     if (this.isLoginMode) {
-      this.authService.login(enteredUsername, enteredPassword).subscribe({
-        next: (resData) => {
-          console.log(resData);
-          this.isLoading = false;
-        },
-        error: (errorMessage) => {
-          this.isLoading = false;
-          this.error = errorMessage;
-        },
-      });
+      authObservable = this.authService.login(enteredUsername, enteredPassword)
     } else {
-      this.authService.signUp(enteredUsername, enteredPassword).subscribe({
-        next: (resData) => {
-          console.log(resData);
-          this.isLoading = false;
-        },
-        error: (errorMessage) => {
-          this.isLoading = false;
-          this.error = errorMessage;
-        },
-      });
+      authObservable = this.authService.signUp(enteredUsername, enteredPassword)
     }
+
+    authObservable.subscribe({
+      next: (resData) => {
+        this.isLoading = false;
+        console.log(resData);
+      },
+      error: (errorMessage) => {
+        this.isLoading = false;
+        this.error = errorMessage;
+      },
+    });
 
     this.form.reset();
   }
