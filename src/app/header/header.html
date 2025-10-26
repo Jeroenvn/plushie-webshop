@@ -1,0 +1,14 @@
+<div class="header">
+  <a routerLink="products">Plushie Webshop</a>
+  <a routerLink="products" routerLinkActive="selected">Products</a>
+  @if (isAdmin) {
+  <a routerLink="manage-products" routerLinkActive="selected">Manage Products</a>
+  }
+  @if (!isLoggedIn) {
+  <a routerLink="auth" routerLinkActive="selected">Authentication</a>
+  }
+  <a routerLink="cart" routerLinkActive="selected">My Cart</a>
+  @if (isLoggedIn) {
+  <button (click)="onLogout()">Logout</button>
+  }
+</div>

@@ -1,0 +1,7 @@
+@if (isAddingProduct) {
+  <app-add-product-dialog (cancel)="onCloseCreateProduct()"></app-add-product-dialog>
+}
+<button (click)="onCreateProduct()">Create new product</button>
+@for (product of products(); track product.id) {
+  <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>
+}
