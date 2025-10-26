@@ -9,7 +9,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Header {
   isLoggedIn = false;
-  isAdmin = false;
+  isAdmin = true;
 
   onLogout() {
     throw new Error('Method not implemented.');
