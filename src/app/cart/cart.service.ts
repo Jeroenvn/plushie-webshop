@@ -32,10 +32,7 @@ export class CartService {
 
       const updatedCart = [...cart];
       updatedCart[existingItemIndex].amount--;
-      console.log(updatedCart[0]);
       if (updatedCart[existingItemIndex].amount <= 0) updatedCart.splice(existingItemIndex, 1);
-      console.log(updatedCart[0]);
-      console.log(updatedCart)
 
       return updatedCart;
     });
