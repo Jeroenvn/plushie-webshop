@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ProductService } from '../product.service';
 import { Product } from '../product.model';
 import { ProductItem } from "../product-item/product-item";
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-product-page',
@@ -11,6 +12,7 @@ import { ProductItem } from "../product-item/product-item";
 })
 export class ProductPage implements OnInit {
   private productService = inject(ProductService);
+  private cartService = inject(CartService);
 
   products = signal<Product[]>([]);
 
@@ -31,5 +33,9 @@ export class ProductPage implements OnInit {
         this.products.set(responseData);
       }
     })
+  }
+
+  onAddToCart(product: Product) {
+    this.cartService.addToCart(product);
   }
 }

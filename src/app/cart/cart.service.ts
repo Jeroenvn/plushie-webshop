@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, Injectable, OnInit, signal } from '@angular/core';
 import { CartItem } from './cart-item.model';
 import { Product } from '../product/product.model';
 
@@ -31,8 +31,11 @@ export class CartService {
       if (existingItemIndex < 0) return cart;
 
       const updatedCart = [...cart];
-      updatedCart[existingItemIndex].amount++;
+      updatedCart[existingItemIndex].amount--;
+      console.log(updatedCart[0]);
       if (updatedCart[existingItemIndex].amount <= 0) updatedCart.splice(existingItemIndex, 1);
+      console.log(updatedCart[0]);
+      console.log(updatedCart)
 
       return updatedCart;
     });

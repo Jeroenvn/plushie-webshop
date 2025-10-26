@@ -9,9 +9,9 @@ import { Product } from '../product.model';
 })
 export class ProductItem {
   product = input.required<Product>();
-  addToCart = output<string>();
+  addToCart = output<Product>();
 
   onAddToCart() {
-    this.addToCart.emit(this.product().id);
+    this.addToCart.emit(this.product());
   }
 }
