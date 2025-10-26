@@ -41,7 +41,7 @@ export class ManageProductsPage implements OnInit {
     })
   }
 
-  onCancelCreateProduct() {
+  onCloseCreateProduct() {
     this.isAddingProduct = false;
   }
 }

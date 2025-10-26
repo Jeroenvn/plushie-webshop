@@ -12,7 +12,7 @@ import { ProductService } from '../product/product.service';
 export class AddProductDialog {
   private productService = inject(ProductService);
 
-  cancel = output();
+  close = output();
 
   form = new FormGroup({
     name: new FormControl('', {
@@ -40,10 +40,11 @@ export class AddProductDialog {
     this.productService.postProduct(product).subscribe();
 
     this.form.reset();
+    this.close.emit();
   }
 
   onCancel() {
     this.form.reset();
-    this.cancel.emit();
+    this.close.emit();
   }
 }
