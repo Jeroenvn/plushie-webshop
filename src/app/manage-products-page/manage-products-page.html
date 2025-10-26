@@ -1,5 +1,7 @@
 @if (isAddingProduct) {
   <app-add-product-dialog (cancel)="onCancelCreateProduct()"></app-add-product-dialog>
 }
-<button (click)="onCreateProduct()">button to open dialog form for creating a new product!</button>
-<p>list of all products with a delete button!</p>
+<button (click)="onCreateProduct()">Create new product</button>
+@for (product of products(); track product.id) {
+  <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>
+}

@@ -18,4 +18,8 @@ export class ProductService {
       product,
     });
   }
+
+  deleteProduct(productId: string) {
+    return this.httpClient.delete('http://localhost:8081/products/' + productId);
+  }
 }
