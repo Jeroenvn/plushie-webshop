@@ -1,12 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Subject, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   token: string;
-  expiresInSeconds: string;
+  expiresIn: string;
   userId: string;
 }
 
@@ -17,7 +17,7 @@ export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
 
-  user = new Subject<User | null>();
+  user = new BehaviorSubject<User | null>(null);
   token: string | null = null;
 
   constructor() {
@@ -37,6 +37,32 @@ export class AuthService {
     this.router.navigate(['/auth']);
   }
 
+  autoLogin() {
+    const rawUserData = localStorage.getItem('userData');
+
+    if (!rawUserData) {
+      return;
+    }
+
+    const userData: {
+      username: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(rawUserData);
+
+    const loadedUser = new User(
+      userData.username,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+    }
+  }
+
   signUp(username: string, password: string) {
     return this.httpClient
       .post<AuthResponseData>('http://localhost:8081/auth/newUser', {
@@ -50,7 +76,7 @@ export class AuthService {
             username,
             responseData.userId,
             responseData.token,
-            responseData.expiresInSeconds
+            responseData.expiresIn
           );
         })
       );
@@ -69,7 +95,7 @@ export class AuthService {
             username,
             responseData.userId,
             responseData.token,
-            responseData.expiresInSeconds
+            responseData.expiresIn
           );
         })
       );
@@ -93,5 +119,7 @@ export class AuthService {
     const expirationDate = new Date(new Date().getTime() + +expiresInSeconds * 1000);
     const user = new User(username, userId, token, expirationDate);
     this.user.next(user);
+    console.log(user);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 }

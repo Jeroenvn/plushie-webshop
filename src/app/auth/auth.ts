@@ -70,7 +70,6 @@ export class Auth {
       next: (resData) => {
         this.isLoading = false;
         this.router.navigate(['/products']);
-        console.log(resData);
       },
       error: (errorMessage) => {
         this.isLoading = false;
