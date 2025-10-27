@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 export interface AuthResponseData {
   token: string;
@@ -38,7 +39,7 @@ export class AuthService {
     this.user.next(null);
     this.router.navigate(['/auth']);
     localStorage.removeItem('userData');
-    if (this.tokenExpirationTimer){
+    if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
     this.tokenExpirationTimer = null;
@@ -64,16 +65,26 @@ export class AuthService {
       _tokenExpirationDate: string;
     } = JSON.parse(rawUserData);
 
+    const decoded_token: {
+      role: string;
+    } = jwtDecode(userData._token);
+    let isAdmin = false;
+    if (decoded_token.role == 'ROLE_ADMIN') {
+      isAdmin = true;
+    }
+
     const loadedUser = new User(
       userData.username,
       userData.id,
+      isAdmin,
       userData._token,
       new Date(userData._tokenExpirationDate)
     );
 
     if (loadedUser.token) {
       this.user.next(loadedUser);
-      const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(expirationDuration);
     }
   }
@@ -132,7 +143,15 @@ export class AuthService {
     expiresInSeconds: string
   ) {
     const expirationDate = new Date(new Date().getTime() + +expiresInSeconds * 1000);
-    const user = new User(username, userId, token, expirationDate);
+    const decoded_token: {
+      role: string;
+    } = jwtDecode(token);
+    let isAdmin = false;
+    if (decoded_token.role == 'ROLE_ADMIN') {
+      isAdmin = true;
+    }
+    const user = new User(username, userId, isAdmin, token, expirationDate);
+
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
     this.autoLogout(+expiresInSeconds * 1000);

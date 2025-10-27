@@ -13,12 +13,15 @@ export class Header implements OnInit {
   private authService = inject(AuthService);
 
   isAuthenticated = false;
-  isAdmin = true;
+  isAdmin = false;
 
   ngOnInit(): void {
-    this.authService.user.subscribe(
-      (user) => (this.isAuthenticated = !!user)
-    );
+    this.authService.user.subscribe((user) => {
+      if (!!user) {
+        this.isAuthenticated = true;
+        this.isAdmin = user.isAdmin;
+      }
+    });
   }
 
   onLogout() {
