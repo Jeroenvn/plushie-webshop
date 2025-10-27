@@ -16,6 +16,19 @@ export class AuthService {
   private httpClient = inject(HttpClient);
 
   user = new Subject<User>();
+  token: string | null = null;
+
+  constructor() {
+    this.user.subscribe({
+      next: (user) => {
+        if (!user) {
+          this.token = null;
+        } else {
+          this.token = user.token;
+        }
+      },
+    });
+  }
 
   signUp(username: string, password: string) {
     return this.httpClient
