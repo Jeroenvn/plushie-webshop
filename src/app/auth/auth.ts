@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthResponseData, AuthService } from './auth.service';
 import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -12,6 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class Auth {
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   isLoginMode: boolean = true;
   isLoading: boolean = false;
@@ -67,7 +69,7 @@ export class Auth {
     authObservable.subscribe({
       next: (resData) => {
         this.isLoading = false;
-        console.log(resData);
+        this.router.navigate(['/products']);
       },
       error: (errorMessage) => {
         this.isLoading = false;

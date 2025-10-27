@@ -3,6 +3,7 @@ import { Auth } from './auth/auth';
 import { ProductPage } from './product/product-page/product-page';
 import { CartPage } from './cart/cart-page/cart-page';
 import { ManageProductsPage } from './manage-products-page/manage-products-page';
+import { AuthGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,7 @@ export const routes: Routes = [
   },
   {
     path: 'manage-products',
+    canActivate: [AuthGuard],
     component: ManageProductsPage,
     title: 'Manage Products',
   },

@@ -2,6 +2,7 @@ export class User {
   constructor(
     public username: string,
     public id: string,
+    public isAdmin: boolean,
     private _token: string,
     private _tokenExpirationDate: Date
   ) {}

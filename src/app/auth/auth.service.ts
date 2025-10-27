@@ -1,11 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, Subject, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
+import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
 
 export interface AuthResponseData {
   token: string;
-  expiresInSeconds: string;
+  expiresIn: string;
   userId: string;
 }
 
@@ -14,8 +16,78 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
+  private router = inject(Router);
 
-  user = new Subject<User>();
+  private tokenExpirationTimer: any;
+
+  user = new BehaviorSubject<User | null>(null);
+  token: string | null = null;
+
+  constructor() {
+    this.user.subscribe({
+      next: (user) => {
+        if (!user) {
+          this.token = null;
+        } else {
+          this.token = user.token;
+        }
+      },
+    });
+  }
+
+  logout() {
+    this.user.next(null);
+    this.router.navigate(['/auth']);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
+  }
+
+  autoLogin() {
+    const rawUserData = localStorage.getItem('userData');
+
+    if (!rawUserData) {
+      return;
+    }
+
+    const userData: {
+      username: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(rawUserData);
+
+    const decoded_token: {
+      role: string;
+    } = jwtDecode(userData._token);
+    let isAdmin = false;
+    if (decoded_token.role == 'ROLE_ADMIN') {
+      isAdmin = true;
+    }
+
+    const loadedUser = new User(
+      userData.username,
+      userData.id,
+      isAdmin,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+    );
+
+    if (loadedUser.token) {
+      this.user.next(loadedUser);
+      const expirationDuration =
+        new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoLogout(expirationDuration);
+    }
+  }
 
   signUp(username: string, password: string) {
     return this.httpClient
@@ -30,7 +102,7 @@ export class AuthService {
             username,
             responseData.userId,
             responseData.token,
-            responseData.expiresInSeconds
+            responseData.expiresIn
           );
         })
       );
@@ -49,7 +121,7 @@ export class AuthService {
             username,
             responseData.userId,
             responseData.token,
-            responseData.expiresInSeconds
+            responseData.expiresIn
           );
         })
       );
@@ -71,7 +143,17 @@ export class AuthService {
     expiresInSeconds: string
   ) {
     const expirationDate = new Date(new Date().getTime() + +expiresInSeconds * 1000);
-    const user = new User(username, userId, token, expirationDate);
+    const decoded_token: {
+      role: string;
+    } = jwtDecode(token);
+    let isAdmin = false;
+    if (decoded_token.role == 'ROLE_ADMIN') {
+      isAdmin = true;
+    }
+    const user = new User(username, userId, isAdmin, token, expirationDate);
+
     this.user.next(user);
+    localStorage.setItem('userData', JSON.stringify(user));
+    this.autoLogout(+expiresInSeconds * 1000);
   }
 }
