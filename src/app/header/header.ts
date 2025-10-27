@@ -22,6 +22,6 @@ export class Header implements OnInit {
   }
 
   onLogout() {
-    throw new Error('Method not implemented.');
+    this.authService.logout();
   }
 }

@@ -15,7 +15,7 @@ export interface AuthResponseData {
 export class AuthService {
   private httpClient = inject(HttpClient);
 
-  user = new Subject<User>();
+  user = new Subject<User | null>();
   token: string | null = null;
 
   constructor() {
@@ -28,6 +28,10 @@ export class AuthService {
         }
       },
     });
+  }
+
+  logout() {
+    this.user.next(null);
   }
 
   signUp(username: string, password: string) {
