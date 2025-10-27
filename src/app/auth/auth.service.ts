@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 export interface AuthResponseData {
   token: string;
@@ -14,6 +15,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   private httpClient = inject(HttpClient);
+  private router = inject(Router);
 
   user = new Subject<User | null>();
   token: string | null = null;
@@ -32,6 +34,7 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
+    this.router.navigate(['/auth']);
   }
 
   signUp(username: string, password: string) {
