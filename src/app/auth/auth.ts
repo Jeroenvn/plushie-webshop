@@ -6,10 +6,11 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { FloatLabel } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule, LoadingSpinner, FloatLabel, InputTextModule],
+  imports: [ReactiveFormsModule, LoadingSpinner, FloatLabel, InputTextModule, Button],
   templateUrl: './auth.html',
   styleUrl: './auth.sass',
 })
