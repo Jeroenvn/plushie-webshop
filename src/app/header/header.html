@@ -1,14 +1,3 @@
-<div class="header">
-  <a routerLink="products">Plushie Webshop</a>
-  <a routerLink="products" routerLinkActive="selected">Products</a>
-  @if (isAdmin) {
-  <a routerLink="manage-products" routerLinkActive="selected">Manage Products</a>
-  }
-  @if (!isAuthenticated) {
-  <a routerLink="auth" routerLinkActive="selected">Authentication</a>
-  }
-  <a routerLink="cart" routerLinkActive="selected">My Cart</a>
-  @if (isAuthenticated) {
-  <a (click)="onLogout()">Logout</a>
-  }
+<div class="card">
+    <p-menubar [model]="items" breakpoint="1px" />
 </div>

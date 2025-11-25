@@ -1,3 +1,5 @@
-@for (cartItem of cart(); track cartItem.product.id) {
-  <app-cart-page-item [item]="cartItem" (increaseAmount)="onIncreaseAmount(cartItem.product)" (decreaseAmount)="onDecreaseAmount(cartItem.product)"/>
-}
+<div class="cart-container">
+  @for (cartItem of cart(); track cartItem.product.id) {
+    <app-cart-page-item [item]="cartItem" (increaseAmount)="onIncreaseAmount(cartItem.product)" (decreaseAmount)="onDecreaseAmount(cartItem.product)"/>
+  }
+</div>

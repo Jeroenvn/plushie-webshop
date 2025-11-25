@@ -1,10 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { CartItem } from '../cart-item.model';
 import { Product } from '../../product/product.model';
+import { Card } from "primeng/card";
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'app-cart-page-item',
-  imports: [],
+  imports: [Card, Button],
   templateUrl: './cart-page-item.html',
   styleUrl: './cart-page-item.sass',
 })

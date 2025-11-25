@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-dialog {
+.dialog {
   width: 90%;
   background-color: white;
   border-color: black;

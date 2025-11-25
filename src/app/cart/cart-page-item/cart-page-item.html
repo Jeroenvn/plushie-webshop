@@ -1,5 +1,11 @@
-<h3>{{ item().product.name }}</h3>
-<p>{{ item().product.description }}</p>
-<p>{{ item().amount }}</p>
-<button (click)="onIncreaseAmount()">+</button>
-<button (click)="onDecreaseAmount()">-</button>
+<p-card>
+  <ng-template #title>{{ item().product.name }}</ng-template>
+  <div class="container">
+    <p>{{ item().product.description }}</p>
+    <div class="counter">
+      <p-button label="-" (click)="onDecreaseAmount()"></p-button>
+      <p>{{ item().amount }}</p>
+      <p-button label="+" (click)="onIncreaseAmount()"></p-button>
+    </div>
+  </div>
+</p-card>
