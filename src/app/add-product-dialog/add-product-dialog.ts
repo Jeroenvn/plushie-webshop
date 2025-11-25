@@ -2,10 +2,12 @@ import { Component, inject, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductCreateDto } from '../product/product-create-dto.model';
 import { ProductService } from '../product/product.service';
+import { FloatLabel } from "primeng/floatlabel";
+import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'app-add-product-dialog',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FloatLabel, Dialog],
   templateUrl: './add-product-dialog.html',
   styleUrl: './add-product-dialog.css',
 })

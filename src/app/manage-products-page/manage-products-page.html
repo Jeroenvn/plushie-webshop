@@ -1,8 +1,26 @@
-@if (isAddingProduct) {
-  <app-add-product-dialog (close)="onCloseCreateProduct()"></app-add-product-dialog>
-}
+<p-dialog [style]="{ width: '15rem' }" [visible]="isAddingProduct" closable="false">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-floatlabel class="float-label" variant="on">
+      <input id="name" pInputText formControlName="name" />
+      <label for="name">Name</label>
+    </p-floatlabel>
+    <p-floatlabel class="float-label" variant="on">
+      <input id="description" pInputText formControlName="description" />
+      <label for="description">Description</label>
+    </p-floatlabel>
+    <p-floatlabel class="float-label" variant="on">
+      <input id="category" pInputText formControlName="category" />
+      <label for="category">Category</label>
+    </p-floatlabel>
+    <div class="add-dialog-buttons-container">
+      <p-button label="Submit" type="submit" [disabled]="!form.valid"></p-button>
+      <p-button label="Cancel" severity="secondary" (onClick)="isAddingProduct = false"></p-button>
+    </div>
+  </form>
+</p-dialog>
+
 <div class="container">
-  <p-button label="Create new product" (onClick)="onCreateProduct()"></p-button>
+  <p-button label="Create new product" (onClick)="isAddingProduct = true"></p-button>
   <div class="product-container">
     @for (product of products(); track product.id) {
       <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>

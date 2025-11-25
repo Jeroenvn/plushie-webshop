@@ -1,6 +1,10 @@
 <div (click)="onCancel()" class="backdrop"></div>
-<dialog open>
-  <form [formGroup]="form">
+<p-dialog>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-floatlabel class="float-label" variant="on">
+      <input id="name" pInputText formControlName="name" />
+      <label for="name">Name</label>
+    </p-floatlabel>
     <div>
       <label for="name">Name</label>
       <input type="text" id="name" formControlName="name" />
@@ -18,4 +22,4 @@
       <button type="button" (click)="onCancel()">Cancel</button>
     </div>
   </form>
-</dialog>
+</p-dialog>
