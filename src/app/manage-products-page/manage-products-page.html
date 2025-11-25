@@ -1,7 +1,11 @@
 @if (isAddingProduct) {
   <app-add-product-dialog (close)="onCloseCreateProduct()"></app-add-product-dialog>
 }
-<button (click)="onCreateProduct()">Create new product</button>
-@for (product of products(); track product.id) {
-  <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>
-}
+<div class="container">
+  <p-button label="Create new product" (onClick)="onCreateProduct()"></p-button>
+  <div class="product-container">
+    @for (product of products(); track product.id) {
+      <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>
+    }
+  </div>
+</div>

@@ -3,10 +3,11 @@ import { AddProductDialog } from '../add-product-dialog/add-product-dialog';
 import { ProductService } from '../product/product.service';
 import { Product } from '../product/product.model';
 import { ManageProductItem } from "../manage-product-item/manage-product-item";
+import { Button } from "primeng/button";
 
 @Component({
   selector: 'app-manage-products-page',
-  imports: [AddProductDialog, ManageProductItem],
+  imports: [AddProductDialog, ManageProductItem, Button],
   templateUrl: './manage-products-page.html',
   styleUrl: './manage-products-page.sass',
 })
