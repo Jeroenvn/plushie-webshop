@@ -41,7 +41,6 @@ export class Header implements OnInit {
 
     this.items.push({
       label: 'Products',
-      icon: 'pi pi-home',
       command: () => {
         this.router.navigate(['/products'])
       },
@@ -50,7 +49,6 @@ export class Header implements OnInit {
     if (!this.isAuthenticated){
       this.items.push({
         label: 'Login',
-        icon: 'pi pi-home',
         command: () => {
           this.router.navigate(['/auth']);
         },
@@ -59,7 +57,6 @@ export class Header implements OnInit {
     else{
       this.items.push({
         label: 'Cart',
-        icon: 'pi pi-home',
         command: () => {
           this.router.navigate(['/cart']);
         },
@@ -67,7 +64,6 @@ export class Header implements OnInit {
       if (this.isAdmin){
         this.items.push({
           label: 'Manage products',
-          icon: 'pi pi-home',
           command: () => {
             this.router.navigate(['/manage-products']);
           },
@@ -75,7 +71,6 @@ export class Header implements OnInit {
       }
       this.items.push({
         label: 'Logout',
-        icon: 'pi pi-home',
         command: () => {
           this.authService.logout();
           this.router.navigate(['/auth']);
