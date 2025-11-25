@@ -1,4 +1,4 @@
-import { effect, Injectable, OnInit, signal } from '@angular/core';
+import { Injectable, OnInit, signal } from '@angular/core';
 import { CartItem } from './cart-item.model';
 import { Product } from '../product/product.model';
 
