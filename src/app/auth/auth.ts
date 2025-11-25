@@ -4,10 +4,12 @@ import { AuthResponseData, AuthService } from './auth.service';
 import { LoadingSpinner } from '../shared/loading-spinner/loading-spinner';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { FloatLabel } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule, LoadingSpinner],
+  imports: [ReactiveFormsModule, LoadingSpinner, FloatLabel, InputTextModule],
   templateUrl: './auth.html',
   styleUrl: './auth.sass',
 })
@@ -28,16 +30,16 @@ export class Auth {
     }),
   });
 
-  get usernameIsInvalid() {
-    return (
+  get validUsername() {
+    return !(
       this.form.controls.username.touched &&
       this.form.controls.username.dirty &&
       this.form.controls.username.invalid
     );
   }
 
-  get passwordIsInvalid() {
-    return (
+  get validPassword() {
+    return !(
       this.form.controls.password.touched &&
       this.form.controls.password.dirty &&
       this.form.controls.password.invalid
@@ -61,9 +63,9 @@ export class Auth {
     this.isLoading = true;
 
     if (this.isLoginMode) {
-      authObservable = this.authService.login(enteredUsername, enteredPassword)
+      authObservable = this.authService.login(enteredUsername, enteredPassword);
     } else {
-      authObservable = this.authService.signUp(enteredUsername, enteredPassword)
+      authObservable = this.authService.signUp(enteredUsername, enteredPassword);
     }
 
     authObservable.subscribe({

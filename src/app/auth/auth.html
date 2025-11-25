@@ -4,20 +4,17 @@
 <app-loading-spinner />
 } @if (!isLoading) {
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div class="form-group">
+
+  <p-floatlabel class="float-label" variant="on">
+    <input id="username" pInputText formControlName="username" [invalid]="!validUsername" />
     <label for="username">Username</label>
-    <input type="username" id="username" formControlName="username" />
-  </div>
-  @if (usernameIsInvalid) {
-  <p>Please enter a valid username</p>
-  }
-  <div class="form-group">
+  </p-floatlabel>
+
+  <p-floatlabel class="float-label" variant="on">
+    <input id="password" pInputText formControlName="password" [invalid]="!validPassword" />
     <label for="password">Password</label>
-    <input type="password" id="password" formControlName="password" />
-  </div>
-  @if (passwordIsInvalid) {
-  <p>Please enter a valid password</p>
-  }
+  </p-floatlabel>
+
   <div>
     <button type="submit" [disabled]="!form.valid">{{ isLoginMode ? 'Login' : 'Sign Up' }}</button>
     |
