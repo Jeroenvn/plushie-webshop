@@ -64,6 +64,15 @@ export class Header implements OnInit {
           this.router.navigate(['/cart']);
         },
       });
+      if (this.isAdmin){
+        this.items.push({
+          label: 'Manage products',
+          icon: 'pi pi-home',
+          command: () => {
+            this.router.navigate(['/manage-products']);
+          },
+        });
+      }
       this.items.push({
         label: 'Logout',
         icon: 'pi pi-home',
