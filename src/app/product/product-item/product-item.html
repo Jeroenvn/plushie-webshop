@@ -1,3 +1,9 @@
-<h3>{{ product().name }}</h3>
-<p>{{ product().description }}</p>
-<button (click)="onAddToCart()">Add to cart</button>
+<p-card class="product-item">
+  <ng-template #title>{{ product().name }}</ng-template>
+  <p>{{ product().description }}</p>
+  <ng-template #footer>
+    <div class="flex gap-4 mt-1">
+      <p-button label="Add to cart" (onClick)="addToCart" />
+    </div>
+  </ng-template>
+</p-card>

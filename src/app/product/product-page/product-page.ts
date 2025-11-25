@@ -31,8 +31,8 @@ export class ProductPage implements OnInit {
         this.isLoading = false;
         this.isUpdated = true;
         this.products.set(responseData);
-      }
-    })
+      },
+    });
   }
 
   onAddToCart(product: Product) {
