@@ -28,6 +28,10 @@ export class Header implements OnInit {
         this.isAuthenticated = true;
         this.isAdmin = user.isAdmin;
       }
+      else {
+        this.isAuthenticated = false;
+        this.isAdmin = false;
+      }
       this.updateMenuItems();
     });
   }
@@ -65,7 +69,7 @@ export class Header implements OnInit {
         icon: 'pi pi-home',
         command: () => {
           this.authService.logout();
-          this.router.navigate(['/auth'])
+          this.router.navigate(['/auth']);
         }
       });
     }
