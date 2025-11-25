@@ -11,6 +11,7 @@ import { Button } from 'primeng/button';
 })
 export class ProductItem {
   product = input.required<Product>();
+  addable = input<boolean>(true);
   addToCart = output();
 
   onAddToCart() {

@@ -1,5 +1,5 @@
 <div class="product-container">
   @for (product of products(); track product.id) {
-    <app-product-item [product]="product" (addToCart)="onAddToCart(product)"></app-product-item>
+    <app-product-item [product]="product" (addToCart)="onAddToCart(product)" [addable]="isAuthenticated"></app-product-item>
   }
 </div>

@@ -3,6 +3,7 @@ import { ProductService } from '../product.service';
 import { Product } from '../product.model';
 import { ProductItem } from "../product-item/product-item";
 import { CartService } from '../../cart/cart.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-product-page',
@@ -13,14 +14,19 @@ import { CartService } from '../../cart/cart.service';
 export class ProductPage implements OnInit {
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+  private authService = inject(AuthService);
 
   products = signal<Product[]>([]);
+  isAuthenticated = false;
 
   isLoading: boolean = false;
   isUpdated: boolean = false;
 
   ngOnInit(): void {
     this.updateProducts();
+    this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+    })
   }
 
   private updateProducts() {

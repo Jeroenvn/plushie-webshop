@@ -2,8 +2,8 @@
   <ng-template #title>{{ product().name }}</ng-template>
   <p>{{ product().description }}</p>
   <ng-template #footer>
-    <div class="flex gap-4 mt-1">
+    @if (addable()) {
       <p-button label="Add to cart" (onClick)="onAddToCart()" />
-    </div>
+    }
   </ng-template>
 </p-card>
