@@ -91,7 +91,7 @@ export class AuthService {
 
   signUp(username: string, password: string) {
     return this.httpClient
-      .post<AuthResponseData>('http://localhost:8081/auth/newUser', {
+      .post<AuthResponseData>('/api/auth/newUser', {
         username: username,
         password: password,
       })
@@ -110,7 +110,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.httpClient
-      .post<AuthResponseData>('http://localhost:8081/auth/generateToken', {
+      .post<AuthResponseData>('/api/auth/generateToken', {
         username: username,
         password: password,
       })

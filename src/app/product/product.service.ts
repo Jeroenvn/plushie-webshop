@@ -10,16 +10,16 @@ export class ProductService {
   private httpClient = inject(HttpClient);
 
   getAllProducts() {
-    return this.httpClient.get<Product[]>('http://localhost:8081/products');
+    return this.httpClient.get<Product[]>('/api/products');
   }
 
   postProduct(product: ProductCreateDto) {
-    return this.httpClient.post('http://localhost:8081/products', {
+    return this.httpClient.post('/api/products', {
       product,
     });
   }
 
   deleteProduct(productId: string) {
-    return this.httpClient.delete('http://localhost:8081/products/' + productId);
+    return this.httpClient.delete('/api/products/' + productId);
   }
 }
