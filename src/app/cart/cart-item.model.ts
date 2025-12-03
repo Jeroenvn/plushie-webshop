@@ -5,4 +5,8 @@ export class CartItem {
     public product: Product,
     public amount: number
   ){}
+
+  get productId(): string {
+    return this.product.id
+  }
 }

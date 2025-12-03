@@ -25,6 +25,9 @@ export class CartPage {
   }
 
   onPlaceOrder() {
+    this.cartService.orderCart()!.subscribe({
+
+    });
     console.log("Place order pressed");
   }
 
