@@ -3,3 +3,4 @@
     <app-cart-page-item [item]="cartItem" (increaseAmount)="onIncreaseAmount(cartItem.product)" (decreaseAmount)="onDecreaseAmount(cartItem.product)"/>
   }
 </div>
+<p-button label="Place order" (onClick)="onPlaceOrder()" [disabled]="isCartEmpty"></p-button>
