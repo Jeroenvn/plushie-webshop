@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environment.development';
 
 export interface AuthResponseData {
   token: string;
@@ -91,7 +92,7 @@ export class AuthService {
 
   signUp(username: string, password: string) {
     return this.httpClient
-      .post<AuthResponseData>('http://localhost:8081/auth/newUser', {
+      .post<AuthResponseData>(environment.apiUrl + '/auth/newUser', {
         username: username,
         password: password,
       })
@@ -110,7 +111,7 @@ export class AuthService {
 
   login(username: string, password: string) {
     return this.httpClient
-      .post<AuthResponseData>('http://localhost:8081/auth/generateToken', {
+      .post<AuthResponseData>(environment.apiUrl + '/auth/generateToken', {
         username: username,
         password: password,
       })
