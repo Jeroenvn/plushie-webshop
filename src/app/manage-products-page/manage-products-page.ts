@@ -7,22 +7,33 @@ import { Dialog } from "primeng/dialog";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { ProductCreateDto } from '../product/product-create-dto.model';
 import { FloatLabel } from "primeng/floatlabel";
+import { CategoryService } from '../category/category.service';
+import { Category } from '../category/category.model';
+import { Select } from 'primeng/select';
 
 @Component({
   selector: 'app-manage-products-page',
-  imports: [ManageProductItem, Button, Dialog, FloatLabel, ReactiveFormsModule],
+  imports: [ManageProductItem, Button, Dialog, FloatLabel, ReactiveFormsModule, Select],
   templateUrl: './manage-products-page.html',
   styleUrl: './manage-products-page.sass',
 })
 export class ManageProductsPage implements OnInit {
   private productService = inject(ProductService);
+  private categoryService = inject(CategoryService);
 
   products = signal<Product[]>([]);
   isLoading: boolean = false;
   isAddingProduct: boolean = false;
 
+  categories = signal<Category[]>([]);
+
   ngOnInit(): void {
     this.updateProducts();
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories.set(data);
+      },
+    });
   }
 
   updateProducts() {
@@ -48,8 +59,8 @@ export class ManageProductsPage implements OnInit {
     description: new FormControl('', {
       validators: [Validators.required, Validators.minLength(4)],
     }),
-    category: new FormControl('', {
-      validators: [Validators.required, Validators.minLength(4)],
+    category_id: new FormControl('', {
+      validators: [Validators.required],
     }),
   });
 
@@ -61,7 +72,7 @@ export class ManageProductsPage implements OnInit {
     let product: ProductCreateDto = new ProductCreateDto(
       this.form.controls.name.value!,
       this.form.controls.description.value!,
-      this.form.controls.category.value!
+      this.form.controls.category_id.value!
     );
 
     this.productService.postProduct(product).subscribe();

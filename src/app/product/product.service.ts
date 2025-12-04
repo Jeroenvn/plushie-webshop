@@ -15,9 +15,7 @@ export class ProductService {
   }
 
   postProduct(product: ProductCreateDto) {
-    return this.httpClient.post(environment.apiUrl + '/products', {
-      product,
-    });
+    return this.httpClient.post(environment.apiUrl + '/products', product);
   }
 
   deleteProduct(productId: string) {
