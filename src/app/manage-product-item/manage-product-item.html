@@ -1,0 +1,7 @@
+<p-card class="product-item">
+  <ng-template #title>{{ product().name }}</ng-template>
+  <p>{{ product().description }}</p>
+  <ng-template #footer>
+    <p-button label="Delete product" (onClick)="onDelete()" />
+  </ng-template>
+</p-card>

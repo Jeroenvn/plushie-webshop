@@ -1,0 +1,29 @@
+<p-dialog [style]="{ width: '15rem' }" [visible]="isAddingProduct" closable="false">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-floatlabel class="float-label" variant="on">
+      <input id="name" pInputText formControlName="name" />
+      <label for="name">Name</label>
+    </p-floatlabel>
+    <p-floatlabel class="float-label" variant="on">
+      <input id="description" pInputText formControlName="description" />
+      <label for="description">Description</label>
+    </p-floatlabel>
+    <p-floatlabel class="float-label" variant="on">
+      <p-select [options]="categories()" optionLabel="name" optionValue="id" placeholder="Category" formControlName="category_id"></p-select>
+      <label for="category">Category</label>
+    </p-floatlabel>
+    <div class="add-dialog-buttons-container">
+      <p-button label="Submit" type="submit" [disabled]="!form.valid"></p-button>
+      <p-button label="Cancel" severity="secondary" (onClick)="isAddingProduct = false"></p-button>
+    </div>
+  </form>
+</p-dialog>
+
+<div class="container">
+  <p-button label="Create new product" (onClick)="isAddingProduct = true"></p-button>
+  <div class="product-container">
+    @for (product of products(); track product.id) {
+      <app-manage-product-item [product]="product" (delete)="onDeleteProduct(product)"></app-manage-product-item>
+    }
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="login-container">
+  @if (error) {
+  <div>{{ error }}</div>
+  } @if (isLoading) {
+  <app-loading-spinner />
+  } @if (!isLoading) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <p-floatlabel class="float-label" variant="on">
+      <input id="username" pInputText formControlName="username" [invalid]="!validUsername" />
+      <label for="username">Username</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="float-label" variant="on">
+      <input id="password" pInputText formControlName="password" [invalid]="!validPassword" />
+      <label for="password">Password</label>
+    </p-floatlabel>
+
+    <div>
+      <p-button type="submit" [disabled]="!form.valid">{{
+        isLoginMode ? 'Login' : 'Sign Up'
+      }}</p-button>
+      |
+      <p-button severity="secondary" (onClick)="onSwitchMode()">{{
+        isLoginMode ? 'Switch to sign up' : 'Switch to login'
+      }}</p-button>
+    </div>
+  </form>
+  }
+</div>
