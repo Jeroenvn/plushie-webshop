@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { Order } from './order.model';
 import { User } from '../auth/user.model';
 import { AuthService } from '../auth/auth.service';

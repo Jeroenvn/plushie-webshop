@@ -2,7 +2,7 @@ import { inject, Injectable, OnInit, signal } from '@angular/core';
 import { CartItem } from './cart-item.model';
 import { Product } from '../product/product.model';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../auth/auth.service';
 import { User } from '../auth/user.model';
 
