@@ -4,7 +4,7 @@ import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 export interface AuthResponseData {
   token: string;
