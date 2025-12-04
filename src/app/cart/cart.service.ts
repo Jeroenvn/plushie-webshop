@@ -1,11 +1,18 @@
-import { Injectable, OnInit, signal } from '@angular/core';
+import { inject, Injectable, OnInit, signal } from '@angular/core';
 import { CartItem } from './cart-item.model';
 import { Product } from '../product/product.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment.development';
+import { AuthService } from '../auth/auth.service';
+import { User } from '../auth/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private httpClient = inject(HttpClient);
+  private authService = inject(AuthService);
+
   private _cart = signal<CartItem[]>([]);
   public cart = this._cart.asReadonly();
 
@@ -35,6 +42,27 @@ export class CartService {
       if (updatedCart[existingItemIndex].amount <= 0) updatedCart.splice(existingItemIndex, 1);
 
       return updatedCart;
+    });
+  }
+
+  orderCart() {
+    let user: User | null = this.authService.user.value;
+    if (!user){
+      console.log("No user logged in");
+      return;
+    }
+
+    let cart: CartItem[] = this._cart();
+    let orderItems: {productId: String, amount: number}[] = [];
+    cart.forEach((element) => {
+      let item = {
+        productId: element.productId,
+        amount: element.amount,
+      };
+      orderItems.push(item);
+    });
+    return this.httpClient.post(environment.apiUrl + '/users/' + user.id + '/orders', {
+      orderItems,
     });
   }
 }

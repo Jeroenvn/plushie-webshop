@@ -1,0 +1,15 @@
+<p>Order {{order().id}}</p>
+<div class="order-items-container">
+  @for (item of order().orderItems; track $index) {
+    <p-card>
+      <div class="container">
+        <p class="amount">{{ item.amount }}x</p>
+        <div>
+          <p>{{ item.product.name }}</p>
+          <p>{{ item.product.description }}</p>
+        </div>
+      </div>
+    </p-card>
+  }
+</div>
+

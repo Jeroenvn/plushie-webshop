@@ -61,6 +61,12 @@ export class Header implements OnInit {
           this.router.navigate(['/cart']);
         },
       });
+      this.items.push({
+        label: 'Orders',
+        command: () => {
+          this.router.navigate(['/orders']);
+        },
+      });
       if (this.isAdmin){
         this.items.push({
           label: 'Manage products',
