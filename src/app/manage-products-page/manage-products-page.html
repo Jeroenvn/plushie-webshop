@@ -9,7 +9,7 @@
       <label for="description">Description</label>
     </p-floatlabel>
     <p-floatlabel class="float-label" variant="on">
-      <input id="category" pInputText formControlName="category" />
+      <p-select [options]="categories()" optionLabel="name" optionValue="id" placeholder="Category" formControlName="category_id"></p-select>
       <label for="category">Category</label>
     </p-floatlabel>
     <div class="add-dialog-buttons-container">
